@@ -6,9 +6,13 @@ const {loginValidation} = require('../validation')
 
 router.post('/register', async (req,res)=>{
     const {error} = RegisterValidation(req.body);
-    if(error){
-        res.status(400).send(error.details[0].message)
-    }  
+    if(error) return res.status(400).send(error.details[0].message)
+
+    //verifier si le username existe déjà
+    const usernameExist = await User.findOne({username: req.body.username})
+    if (usernameExist) return res.status(400).send('username existe déjà')
+    
+      
     const user = new User({
         username: req.body.username,
         password : req.body.password
