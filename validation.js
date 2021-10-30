@@ -2,7 +2,7 @@ const Joi = require('@hapi/joi')
 // validation de l'inscription
 const RegisterValidation = (data)=>{
     const schema = Joi.object ({
-        username: Joi.string()
+        email: Joi.string()
             .required()
             .min(6),
         password: Joi.string()
@@ -15,9 +15,11 @@ const RegisterValidation = (data)=>{
 }
 const loginValidation = (data)=>{
     const schema = Joi.object ({
-        username: Joi.string()
+        email: Joi.string()
+            .min(3)
             .required()
-            .min(6),
+            .email(),
+
         password: Joi.string()
             .required()
             .min(6)

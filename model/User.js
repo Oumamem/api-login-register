@@ -1,10 +1,12 @@
 const { maxHeaderSize } = require('http');
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
-    username: {
-        type : String,
-        required:true,
-        min:6
+    email: {
+        type: String,
+        lowercase: true,
+        required: [true, "can't be blank"],
+        match: [/\S+@\S+\.\S+/, 'is invalid'],
+        index: true
 
     },
     password: {
